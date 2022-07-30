@@ -103,9 +103,9 @@ def display_basic_info(match):
 		
 	with col2.container():		
 		col2.write('Type')
-		type_text = f'<span class="type-icon type-{type1.lower()}">{type1}</span>'
+		type_text = f'<span class="icon type-{type1.lower()}">{type1}</span>'
 		if type_number == 2:
-			type_text += f' <span class="type-icon type-{type2.lower()}">{type2}</span>'
+			type_text += f' <span class="icon type-{type2.lower()}">{type2}</span>'
 		col2.markdown(type_text, unsafe_allow_html=True)
 		col2.metric("Height", height + " m")
 		col2.metric("Weight", weight + " kg")
@@ -155,19 +155,19 @@ def display_base_stats_type_defenses(match):
 		col2.write('Weaknesses (x2)')	
 		weakness_text = ''
 		for type in weakness_types:
-			weakness_text += f' <span class="type-icon type-{type}">{type}</span>'
+			weakness_text += f' <span class="icon type-{type}">{type}</span>'
 		col2.markdown(weakness_text, unsafe_allow_html=True)
 		
 		col2.write('Resistances (x0.5)')
 		resistance_half_text = ''
 		for type in resistance_half_types:
-			resistance_half_text += f' <span class="type-icon type-{type}">{type}</span>'
+			resistance_half_text += f' <span class="icon type-{type}">{type}</span>'
 		col2.markdown(resistance_half_text, unsafe_allow_html=True)
 		
 		col2.write('Strong Resistances (x0.25)')
 		resistance_quarter_text = ''
 		for type in resistance_quarter_types:
-			resistance_quarter_text += f' <span class="type-icon type-{type}">{type}</span>'
+			resistance_quarter_text += f' <span class="icon type-{type}">{type}</span>'
 		col2.markdown(resistance_quarter_text, unsafe_allow_html=True)
 
 
