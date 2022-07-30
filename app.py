@@ -44,6 +44,7 @@ with st.sidebar.form(key="my_form"):
 	pressed = st.form_submit_button("Search Pokemon")
 
 st.sidebar.subheader('Credits')
+st.write('Of course, I do not claim to own any of the Pokemon data or images in any way. :)')
 st.sidebar.markdown('Pokemon dataset taken from <a href="https://www.kaggle.com/datasets/mariotormo/complete-pokemon-dataset-updated-090420?select=pokedex_%28Update_04.21%29.csv">this Kaggle link</a>.', unsafe_allow_html = True)
 st.sidebar.markdown('Pokemon images taken from <a href="https://www.kaggle.com/datasets/kvpratama/pokemon-images-dataset">this Kaggle link</a>.', unsafe_allow_html = True)
 
