@@ -34,6 +34,20 @@ match = df[df['name'].str.lower() == name]
 info_list = ['Basic Information', 'Base Stats & Type Defenses', 'Training and Breeding', 'Radar Chart']
 selected_info = st.sidebar.multiselect('View Information', info_list, default = info_list)
 
+with st.sidebar.form(key="my_form"):
+	st.subheader('Search Base Stats Range')
+	min_speed, max_speed = st.select_slider('Speed', range(251), value = [0, 250])
+	min_sp_def, max_sp_def = st.select_slider('Special Defense', range(251), value = [0, 250])
+	min_sp_atk, max_sp_atk = st.select_slider('Special Attack', range(251), value = [0, 250])
+	min_def, max_def = st.select_slider('Defense', range(251), value = [0, 250])
+	min_atk, max_atk = st.select_slider('Attack', range(251), value = [0, 250])
+	min_hp, max_hp = st.select_slider('HP', range(251), value = [0, 250])
+	pressed = st.form_submit_button("Search Pokemon")
+
+st.sidebar.subheader('Credits')
+st.sidebar.markdown('Pokemon dataset taken from <a href="https://www.kaggle.com/datasets/mariotormo/complete-pokemon-dataset-updated-090420?select=pokedex_%28Update_04.21%29.csv">this Kaggle link</a>.', unsafe_allow_html = True)
+st.sidebar.markdown('Pokemon images taken from <a href="https://www.kaggle.com/datasets/kvpratama/pokemon-images-dataset">this Kaggle link</a>.', unsafe_allow_html = True)
+
 def get_image_path(name, id):
 	if name.startswith('Mega'):
 		if name.endswith(' X'):
@@ -231,29 +245,6 @@ def display_similar_pokemons(match):
 	st.subheader('20 Most Similar Pokemons')
 	st.table(similar_pokemons_df)
 
-def display_searched_pokemons():
-	df_stats_all = df[['name', 'hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed']].set_index('name')
-	df_stats_all = df_stats_all.rename(columns={'hp': 'HP', 'attack': 'Attack', 'defense': 'Defense', 'sp_attack': 'Special Attack', 'sp_defense': 'Special Defense', 'speed': 'Speed'})
-	searched_pokemons_df = df_stats_all[
-		(df_stats_all['HP'] >= min_hp) & (df_stats_all['HP'] <= max_hp) &
-		(df_stats_all['Attack'] >= min_atk) & (df_stats_all['Attack'] <= max_atk) &
-		(df_stats_all['Defense'] >= min_def) & (df_stats_all['Defense'] <= max_def) &
-		(df_stats_all['Special Attack'] >= min_sp_atk) & (df_stats_all['Special Attack'] <= max_sp_atk) &
-		(df_stats_all['Special Defense'] >= min_sp_def) & (df_stats_all['Special Defense'] <= max_sp_def) &
-		(df_stats_all['Speed'] >= min_speed) & (df_stats_all['Speed'] <= max_speed)										
-        ]
-	return df_stats_all.index.tolist()
-
-
-with st.sidebar.form(key="my_form"):
-	st.subheader('Search Base Stats Range')
-	min_speed, max_speed = st.select_slider('Speed', range(251), value = [0, 250])
-	min_sp_def, max_sp_def = st.select_slider('Special Defense', range(251), value = [0, 250])
-	min_sp_atk, max_sp_atk = st.select_slider('Special Attack', range(251), value = [0, 250])
-	min_def, max_def = st.select_slider('Defense', range(251), value = [0, 250])
-	min_atk, max_atk = st.select_slider('Attack', range(251), value = [0, 250])
-	min_hp, max_hp = st.select_slider('HP', range(251), value = [0, 250])
-	pressed = st.form_submit_button("Search Pokemon")
 	
 if not pressed:
 	if len(match) == 0:
