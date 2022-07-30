@@ -6,7 +6,7 @@ import plotly.express as px
 import pandas as pd
 import matplotlib.pyplot as plt
 
-st.set_page_config(page_title = "Pokedex", layout = "wide")
+st.set_page_config(page_title = "Pokédex", layout = "wide")
 
 def local_css(file_name):
     with open(file_name) as f:
@@ -89,7 +89,7 @@ def display_basic_info(match):
 	ability2 = match['ability_2'].iloc[0]
 	ability_hidden = match['ability_hidden'].iloc[0]
 	
-	st.title(name)
+	st.title(name + ' #' + str(id).zfill(3))
 	col1, col2, col3 = st.columns(3)
 
 	try:
