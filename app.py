@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 
 st.set_page_config(page_title = "Pokedex", layout = "wide")
 
-
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
@@ -17,14 +16,9 @@ def local_css(file_name):
 def get_data():
 	return pd.read_csv('pokedex.csv', keep_default_na = False).iloc[:847] #null values as empty string
 
-
 local_css('style.css')
 
-
 df = get_data()
-
-#categories = df_testi[columns]
-#categories = categories.set_index('Name')
 
 st.sidebar.title('Pokédex')
 name = st.sidebar.text_input('Search Name', '').lower()
@@ -94,11 +88,9 @@ def display_basic_info(match):
 	with col2.container():		
 		col2.write('Type')
 		type_text = f'<span class="type-icon type-{type1.lower()}">{type1}</span>'
-		image = Image.open('type_symbols/' + type1.lower() + '.png')
 		if type_number == 2:
 			type_text += f' <span class="type-icon type-{type2.lower()}">{type2}</span>'
 		col2.markdown(type_text, unsafe_allow_html=True)
-		#col2.image(image, width = 60, caption = type1)
 		col2.metric("Height", height + " m")
 		col2.metric("Weight", weight + " kg")
 
@@ -177,7 +169,6 @@ def display_training_breeding(match):
 	egg_type_2	= match['egg_type_2'].iloc[0]
 	percentage_male = match['percentage_male'].iloc[0]
 	egg_cycles = match['egg_cycles'].iloc[0]
-
 		
 	with st.container():
 		col1, col2 = st.columns(2)
