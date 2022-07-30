@@ -17,7 +17,6 @@ def get_data():
 	return pd.read_csv('pokedex.csv', keep_default_na = False).iloc[:847] #null values as empty string
 
 local_css('style.css')
-
 df = get_data()
 
 st.sidebar.title('Pokédex')
@@ -91,7 +90,8 @@ def display_basic_info(match):
 	
 	st.title(name + ' #' + str(id).zfill(3))
 	col1, col2, col3 = st.columns(3)
-
+	
+	# display pokemon image
 	try:
 		path = get_image_path(name, id)
 		image = Image.open(path)
@@ -162,7 +162,7 @@ def display_base_stats_type_defenses(match):
 			resistance_half_text += f' <span class="type-icon type-{type}">{type}</span>'
 		col2.markdown(resistance_half_text, unsafe_allow_html=True)
 		
-		col2.write('Resistances (x0.25)')
+		col2.write('Strong Resistances (x0.25)')
 		resistance_quarter_text = ''
 		for type in resistance_quarter_types:
 			resistance_quarter_text += f' <span class="type-icon type-{type}">{type}</span>'
@@ -177,7 +177,6 @@ def display_training_breeding(match):
 	growth_rate = match['growth_rate'].iloc[0]
 	
 	# breeding
-
 	egg_type_number = match['egg_type_number'].iloc[0]
 	egg_type_1	= match['egg_type_1'].iloc[0] 
 	egg_type_2	= match['egg_type_2'].iloc[0]
@@ -232,7 +231,7 @@ def display_similar_pokemons(match):
 		st.subheader(name)
 		id = df[df.name == name]['pokedex_number'].iloc[0]
 		
-		# show image of Pokemon
+		# display Pokemon image
 		try:
 			path = get_image_path(name, id)
 			image = Image.open(path)
@@ -244,7 +243,6 @@ def display_similar_pokemons(match):
 		st.plotly_chart(fig)
 	st.subheader('20 Most Similar Pokemons')
 	st.table(similar_pokemons_df)
-
 	
 if not pressed:
 	if len(match) == 0:
@@ -263,12 +261,12 @@ else:
 	df_stats_all = df[['name', 'hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed']].set_index('name')
 	df_stats_all = df_stats_all.rename(columns={'hp': 'HP', 'attack': 'Attack', 'defense': 'Defense', 'sp_attack': 'Special Attack', 'sp_defense': 'Special Defense', 'speed': 'Speed'})
 	searched_pokemons_df = df_stats_all[
-	(df_stats_all['HP'] >= min_hp) & (df_stats_all['HP'] <= max_hp) &
-	(df_stats_all['Attack'] >= min_atk) & (df_stats_all['Attack'] <= max_atk) &
-	(df_stats_all['Defense'] >= min_def) & (df_stats_all['Defense'] <= max_def) &
-	(df_stats_all['Special Attack'] >= min_sp_atk) & (df_stats_all['Special Attack'] <= max_sp_atk) &
-	(df_stats_all['Special Defense'] >= min_sp_def) & (df_stats_all['Special Defense'] <= max_sp_def) &
-	(df_stats_all['Speed'] >= min_speed) & (df_stats_all['Speed'] <= max_speed)										
+		(df_stats_all['HP'] >= min_hp) & (df_stats_all['HP'] <= max_hp) &
+		(df_stats_all['Attack'] >= min_atk) & (df_stats_all['Attack'] <= max_atk) &
+		(df_stats_all['Defense'] >= min_def) & (df_stats_all['Defense'] <= max_def) &
+		(df_stats_all['Special Attack'] >= min_sp_atk) & (df_stats_all['Special Attack'] <= max_sp_atk) &
+		(df_stats_all['Special Defense'] >= min_sp_def) & (df_stats_all['Special Defense'] <= max_sp_def) &
+		(df_stats_all['Speed'] >= min_speed) & (df_stats_all['Speed'] <= max_speed)										
 	]
 	st.header('Pokemon Search Using Base Stats')
 	st.table(searched_pokemons_df)
