@@ -36,7 +36,7 @@ else: # if no name matches input
 # filter row of data that matches Pokemon selected in dropdown menu
 match = df[df['name'].str.lower() == name]
 
-# select
+# select information to view
 info_list = ['Basic Information', 'Base Stats & Type Defenses', 'Training and Breeding', 'Radar Chart']
 selected_info = st.sidebar.multiselect('View Information', info_list, default = info_list)
 
@@ -106,7 +106,7 @@ def display_basic_info(match):
 	st.title(name + ' #' + str(id).zfill(3))
 	col1, col2, col3 = st.columns(3)
 	
-	# display pokemon image
+	# leftmost column col1 displays pokemon image
 	try:
 		path = get_image_path(name, id)
 		image = Image.open(path)
@@ -114,7 +114,7 @@ def display_basic_info(match):
 	except: # output 'Image not available' instead of crashing the program when image not found
 		col1.write('Image not available.')
 	
-	# display nicely formatted Pokemon type using css loaded earlier
+	# middle column col2 displays nicely formatted Pokemon type using css loaded earlier
 	with col2.container():		
 		col2.write('Type')
 		# html code that loads the class defined in css, each Pokemon type has a different style color
@@ -126,7 +126,7 @@ def display_basic_info(match):
 		col2.metric("Height", height + " m")
 		col2.metric("Weight", weight + " kg")
 	
-	# display Pokemon abilities
+	# rightmost column col3 displays Pokemon abilities
 	with col3.container():
 		col3.metric("Species", species)
 		col3.write('Abilities')
@@ -159,7 +159,7 @@ def display_base_stats_type_defenses(match):
 	with st.container():	
 		col1, col2 = st.columns(2)	
 		
-		# left column displays horizontal bar chart of base stats
+		# left column col1 displays horizontal bar chart of base stats
 		col1.subheader('Base Stats')
 		df_stats = match[['hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed']]
 		df_stats = df_stats.rename(columns={'hp': 'HP', 'attack': 'Attack', 'defense': 'Defense', 'sp_attack': 'Special Attack', 'sp_defense': 'Special Defense', 'speed': 'Speed'}).T
@@ -171,7 +171,7 @@ def display_base_stats_type_defenses(match):
 		plt.xlim([0, 250])
 		col1.pyplot(fig)
 		
-		# right column displays the weaknesses and resistances
+		# right column col2 displays the weaknesses and resistances
 		# the displayed types are nicely formatted using css (same as earlier)
 		col2.subheader('Type Defenses')				
 		col2.write('Weaknesses (x2)')	
@@ -210,14 +210,14 @@ def display_training_breeding(match):
 	with st.container():
 		col1, col2 = st.columns(2)
 		
-		# left column displays training data
+		# left column col1 displays training data
 		col1.subheader('Training')		
 		col1.metric('Catch Rate', catch_rate)
 		col1.metric('Base Friendship', base_friendship)
 		col1.metric('Base Experience', base_experience)
 		col1.metric('Growth Rate', growth_rate)
 		
-		# right column displays breeding data
+		# right column col2 displays breeding data
 		col2.subheader('Breeding')		
 		if egg_type_number == 2: # some Pokemon have 2 egg types
 			col2.metric('Egg Types', egg_type_1 + ', ' + egg_type_2)
