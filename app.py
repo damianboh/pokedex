@@ -139,7 +139,8 @@ def display_basic_info(match):
 
 def display_base_stats_type_defenses(match):
 	# list to gather all type weaknesses and resistances
-	weakness_types = []
+	weakness_2_types = []
+	weakness_4_types = []
 	resistance_half_types = []
 	resistance_quarter_types = []
 	
@@ -153,14 +154,17 @@ def display_base_stats_type_defenses(match):
 					resistance_half_types.append(type)
 				elif value == 0.25:
 					resistance_quarter_types.append(type)
-				if value == 2:
-					weakness_types.append(type)
+				elif value == 2:
+					weakness_2_types.append(type)
+				elif value == 4:
+					weakness_4_types.append(type)
 					
 	with st.container():	
 		col1, col2 = st.columns(2)	
 		
 		# left column col1 displays horizontal bar chart of base stats
 		col1.subheader('Base Stats')
+		# get base stats of Pokemon and rename columns nicely
 		df_stats = match[['hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed']]
 		df_stats = df_stats.rename(columns={'hp': 'HP', 'attack': 'Attack', 'defense': 'Defense', 'sp_attack': 'Special Attack', 'sp_defense': 'Special Defense', 'speed': 'Speed'}).T
 		df_stats.columns=['stats']
@@ -173,10 +177,15 @@ def display_base_stats_type_defenses(match):
 		
 		# right column col2 displays the weaknesses and resistances
 		# the displayed types are nicely formatted using css (same as earlier)
-		col2.subheader('Type Defenses')				
+		col2.subheader('Type Defenses')
+		col2.write('Strong Weaknesses (x4)')	
+		weakness_text = ''
+		for type in weakness_4_types:
+			weakness_text += f' <span class="icon type-{type}">{type}</span>'
+		col2.markdown(weakness_text, unsafe_allow_html=True)		
 		col2.write('Weaknesses (x2)')	
 		weakness_text = ''
-		for type in weakness_types:
+		for type in weakness_2_types:
 			weakness_text += f' <span class="icon type-{type}">{type}</span>'
 		col2.markdown(weakness_text, unsafe_allow_html=True)
 		
@@ -233,6 +242,7 @@ def display_training_breeding(match):
 			
 def display_radar_chart(match):
 	st.header('Radar Chart of Base Stats')
+	# get base stats of Pokemon and rename columns nicely
 	df_stats = match[['hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed']]
 	df_stats = df_stats.rename(columns={'hp': 'HP', 'attack': 'Attack', 'defense': 'Defense', 'sp_attack': 'Special Attack', 'sp_defense': 'Special Defense', 'speed': 'Speed'}).T
 	df_stats.columns=['stats']
@@ -245,7 +255,7 @@ def display_radar_chart(match):
 		display_similar_pokemons(match)
 
 def display_similar_pokemons(match):
-	# get stats of Pokemon in the matched row
+	# get base stats of Pokemon and rename columns nicely
 	df_stats = match[['hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed']]
 	df_stats = df_stats.rename(columns={'hp': 'HP', 'attack': 'Attack', 'defense': 'Defense', 'sp_attack': 'Special Attack', 'sp_defense': 'Special Defense', 'speed': 'Speed'})
 	
