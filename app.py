@@ -144,7 +144,7 @@ def display_base_stats_type_defenses(match):
 	resistance_half_types = []
 	resistance_quarter_types = []
 	
-	# dataset only shows damage (x2, x0.25, x0.5) of each type towards the Pokemon
+	# dataset only shows damage (x4, x2, x0.25, x0.5) of each type towards the Pokemon
 	# manually classify the damages into weaknesses and resistances list
 	for i, j in match.iterrows():
 		for column, value in j.iteritems():
